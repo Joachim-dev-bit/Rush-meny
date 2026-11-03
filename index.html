@@ -1,150 +1,142 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="no">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#071525">
-<title>Rush – Digital meny</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#092c55">
+<title>Rush Haugesund – Meny</title>
 <style>
-  * { box-sizing: border-box; }
-  html, body { margin:0; width:100%; height:100%; overflow:hidden; }
-  body {
-    background:#071525;
-    color:#fff;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  .screen {
-    width:100vw; height:100vh;
-    padding:2.4vh 3vw 2vh;
-    display:flex; flex-direction:column;
-    background:
-      radial-gradient(ellipse at 50% -15%, rgba(30,100,150,.42), transparent 55%),
-      linear-gradient(135deg,#071525 0%,#0b2035 55%,#071525 100%);
-  }
-  .top {
-    flex:0 0 auto;
-    display:flex; align-items:center; justify-content:center;
-    min-height:10vh; padding-bottom:1.5vh;
-    border-bottom:3px solid #b6ed35;
-  }
-  h1 {
-    margin:0; text-align:center; text-transform:uppercase;
-    color:#c5f34a; font-weight:900; letter-spacing:.07em;
-    font-size:clamp(48px,6.2vw,100px);
-    line-height:1;
-    text-shadow:0 3px 18px rgba(0,0,0,.35);
-  }
-  .items {
-    flex:1 1 auto; min-height:0;
-    display:grid; grid-template-columns:1fr 1fr;
-    grid-auto-flow:column;
-    grid-template-rows:repeat(var(--rows), minmax(0,1fr));
-    column-gap:4vw; row-gap:.35vh;
-    padding:2vh 1vw 1vh;
-    align-content:stretch;
-  }
-  .item {
-    min-width:0; display:flex; align-items:center; justify-content:space-between;
-    gap:1vw; border-bottom:1px solid rgba(255,255,255,.15);
-    padding:.25vh .2vw;
-  }
-  .name {
-    min-width:0; font-size:clamp(26px,3.1vw,58px);
-    line-height:1.08; font-weight:700;
-    overflow-wrap:anywhere;
-  }
-  .price {
-    flex:0 0 auto; white-space:nowrap;
-    color:#c5f34a; font-size:clamp(28px,3.25vw,62px);
-    line-height:1; font-weight:900;
-  }
-  .footer {
-    flex:0 0 auto; height:2.5vh; display:flex;
-    align-items:center; justify-content:center;
-    color:rgba(255,255,255,.55); font-size:clamp(12px,1.2vw,20px);
-    letter-spacing:.12em;
-  }
-  .page { display:none; }
-  .page.active { display:flex; }
-  @media (orientation:portrait) {
-    .screen { padding:1.5vh 3vw 1vh; }
-    .top { min-height:8vh; }
-    h1 { font-size:clamp(44px,8vw,88px); }
-    .items { column-gap:3vw; padding:1.5vh .5vw .5vh; }
-    .name { font-size:clamp(22px,4.2vw,46px); }
-    .price { font-size:clamp(24px,4.4vw,48px); }
-  }
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+    repeating-linear-gradient(135deg,rgba(255,255,255,.035) 0 3px,transparent 3px 17px),
+    radial-gradient(ellipse at 12% 0%,rgba(150,175,75,.18),transparent 34%),
+    linear-gradient(115deg,#101f2d 0%,#09264a 42%,#07518a 100%);
+}
+.page{
+  display:none;width:100vw;height:100vh;position:relative;
+  padding:3.3vh 5.8vw 2.1vh;
+}
+.page.active{display:flex;flex-direction:column}
+.logo{
+  position:absolute;left:5.8vw;top:0.8vh;width:4.7vw;height:7.1vh;
+  min-width:46px;min-height:45px;max-width:90px;max-height:78px;
+}
+.logo:before{
+  content:"";position:absolute;inset:0;
+  background:#c6ef35;
+  clip-path:polygon(0 0,100% 0,72% 100%,18% 70%);
+}
+.logo:after{
+  content:"";position:absolute;inset:0;
+  background:#c52d43;
+  clip-path:polygon(100% 0,72% 100%,18% 70%);
+}
+.heading{
+  flex:0 0 auto;text-align:center;margin:0 auto 4.2vh;
+  width:27vw;min-width:250px;padding:0 0 1.15vh;
+  border-bottom:4px solid #bdf02e;border-radius:2px;
+  font-size:clamp(48px,3.4vw,76px);font-weight:900;
+  line-height:1.05;text-shadow:0 4px 8px rgba(0,0,0,.5);
+}
+.items{
+  flex:1;min-height:0;display:grid;
+  grid-template-columns:1fr;grid-template-rows:repeat(var(--count),minmax(0,1fr));
+  padding-top:0.1vh;
+}
+.item{
+  min-height:0;display:flex;align-items:center;justify-content:space-between;
+  gap:2vw;padding:0;
+  font-weight:800;text-shadow:0 3px 5px rgba(0,0,0,.48);
+}
+.name{font-size:clamp(25px,1.58vw,38px);line-height:1.12;min-width:0}
+.price{font-size:clamp(25px,1.58vw,38px);line-height:1.1;white-space:nowrap;margin-left:2vw}
+.footer{
+  flex:0 0 auto;text-align:center;padding-top:1vh;
+  color:rgba(255,255,255,.55);font-size:clamp(12px,.72vw,17px);
+  font-weight:800;letter-spacing:.28em;
+}
+@media (max-aspect-ratio:4/3){
+  .page{padding-left:4vw;padding-right:4vw}
+  .logo{left:4vw}
+  .heading{margin-bottom:3vh;width:40vw}
+  .name,.price{font-size:clamp(21px,2.5vw,34px)}
+}
 </style>
 </head>
 <body>
-<div class="screen">
-  <section class="page active" data-page="0" style="--rows:7">
-    <header class="top"><h1>Drikke</h1></header>
-    <main class="items">
-      <div class="item"><span class="name">Slush 0,3 L</span><span class="price">39,-</span></div>
-      <div class="item"><span class="name">Slush 0,5 L</span><span class="price">49,-</span></div>
-      <div class="item"><span class="name">Slush rør</span><span class="price">79,-</span></div>
-      <div class="item"><span class="name">Brus</span><span class="price">45,-</span></div>
-      <div class="item"><span class="name">Smoothie jordbær</span><span class="price">49,-</span></div>
-      <div class="item"><span class="name">Smoothie mango</span><span class="price">49,-</span></div>
-      <div class="item"><span class="name">Powerade</span><span class="price">49,-</span></div>
-      <div class="item"><span class="name">Kaffe</span><span class="price">45,-</span></div>
-      <div class="item"><span class="name">Te</span><span class="price">35,-</span></div>
-      <div class="item"><span class="name">Kakao</span><span class="price">42,-</span></div>
-      <div class="item"><span class="name">Mer</span><span class="price">29,-</span></div>
-      <div class="item"><span class="name">Telemark</span><span class="price">39,-</span></div>
-      <div class="item"><span class="name">Fuzetea Peach</span><span class="price">39,-</span></div>
-    </main>
-    <footer class="footer">RUSH · MENY</footer>
-  </section>
+<div class="page active" style="--count:13">
+  <div class="logo" aria-hidden="true"></div>
+  <h1 class="heading">Drikke</h1>
+  <main class="items">
+    <div class="item"><span class="name">Slush 0,3L</span><span class="price">39,-</span></div>
+    <div class="item"><span class="name">Slush 0,5L</span><span class="price">49,-</span></div>
+    <div class="item"><span class="name">Slush rør</span><span class="price">79,-</span></div>
+    <div class="item"><span class="name">Brus</span><span class="price">45,-</span></div>
+    <div class="item"><span class="name">Smoothie Jordbær</span><span class="price">49,-</span></div>
+    <div class="item"><span class="name">Smoothie mango</span><span class="price">49,-</span></div>
+    <div class="item"><span class="name">Powerade</span><span class="price">49,-</span></div>
+    <div class="item"><span class="name">Kaffe</span><span class="price">45,-</span></div>
+    <div class="item"><span class="name">Te</span><span class="price">35,-</span></div>
+    <div class="item"><span class="name">Kakao</span><span class="price">42,-</span></div>
+    <div class="item"><span class="name">Mer</span><span class="price">29,-</span></div>
+    <div class="item"><span class="name">Telemark</span><span class="price">39,-</span></div>
+    <div class="item"><span class="name">Fuzetea Peach</span><span class="price">39,-</span></div>
+  </main>
+  <footer class="footer">RUSH HAUGESUND</footer>
+</div>
 
-  <section class="page" data-page="1" style="--rows:7">
-    <header class="top"><h1>Snacks</h1></header>
-    <main class="items">
-      <div class="item"><span class="name">Kanelknut</span><span class="price">39,-</span></div>
-      <div class="item"><span class="name">Hjertevaffel</span><span class="price">39,-</span></div>
-      <div class="item"><span class="name">Cookie melkesjokolade</span><span class="price">39,-</span></div>
-      <div class="item"><span class="name">Cookie mørksjokolade</span><span class="price">39,-</span></div>
-      <div class="item"><span class="name">Oreokake</span><span class="price">59,-</span></div>
-      <div class="item"><span class="name">Gulrotkake</span><span class="price">59,-</span></div>
-      <div class="item"><span class="name">Popcorn liten</span><span class="price">29,-</span></div>
-      <div class="item"><span class="name">Popcorn stor</span><span class="price">39,-</span></div>
-      <div class="item"><span class="name">Kvikk lunsj</span><span class="price">35,-</span></div>
-      <div class="item"><span class="name">Melkesjokolade</span><span class="price">49,-</span></div>
-      <div class="item"><span class="name">Kinder sjokolade</span><span class="price">19,-</span></div>
-      <div class="item"><span class="name">Donut</span><span class="price">29,-</span></div>
-      <div class="item"><span class="name">Cartoonies kjeks</span><span class="price">25,-</span></div>
-      <div class="item"><span class="name">Pringles</span><span class="price">29,-</span></div>
-    </main>
-    <footer class="footer">RUSH · MENY</footer>
-  </section>
+<div class="page" style="--count:14">
+  <div class="logo" aria-hidden="true"></div>
+  <h1 class="heading">Snacks</h1>
+  <main class="items">
+    <div class="item"><span class="name">Kanelknut</span><span class="price">39,-</span></div>
+    <div class="item"><span class="name">Hjertevaffel</span><span class="price">39,-</span></div>
+    <div class="item"><span class="name">Cookie melkesjokolade</span><span class="price">39,-</span></div>
+    <div class="item"><span class="name">Cookie mørksjokolade</span><span class="price">39,-</span></div>
+    <div class="item"><span class="name">Oreokake</span><span class="price">59,-</span></div>
+    <div class="item"><span class="name">Gulrotkake</span><span class="price">59,-</span></div>
+    <div class="item"><span class="name">Popcorn liten</span><span class="price">29,-</span></div>
+    <div class="item"><span class="name">Popcorn stor</span><span class="price">39,-</span></div>
+    <div class="item"><span class="name">Kvikk lunsj</span><span class="price">35,-</span></div>
+    <div class="item"><span class="name">Melkesjokolade</span><span class="price">49,-</span></div>
+    <div class="item"><span class="name">Kinder sjokolade</span><span class="price">19,-</span></div>
+    <div class="item"><span class="name">Donut</span><span class="price">29,-</span></div>
+    <div class="item"><span class="name">Cartoonies kjeks</span><span class="price">25,-</span></div>
+    <div class="item"><span class="name">Pringles</span><span class="price">29,-</span></div>
+  </main>
+  <footer class="footer">RUSH HAUGESUND</footer>
+</div>
 
-  <section class="page" data-page="2" style="--rows:6">
-    <header class="top"><h1>Mat</h1></header>
-    <main class="items">
-      <div class="item"><span class="name">Pizza skinke</span><span class="price">169,-</span></div>
-      <div class="item"><span class="name">Pizza Margherita</span><span class="price">139,-</span></div>
-      <div class="item"><span class="name">Pizza pepperoni</span><span class="price">169,-</span></div>
-      <div class="item"><span class="name">Panini chorizo og ost</span><span class="price">89,-</span></div>
-      <div class="item"><span class="name">Steinovnsbakt panini med ost og salami</span><span class="price">89,-</span></div>
-      <div class="item"><span class="name">Toast</span><span class="price">59,-</span></div>
-      <div class="item"><span class="name">Gratinert ost og skinke sandwich</span><span class="price">79,-</span></div>
-      <div class="item"><span class="name">Pommes liten</span><span class="price">39,-</span></div>
-      <div class="item"><span class="name">Pommes stor</span><span class="price">59,-</span></div>
-      <div class="item"><span class="name">Glutenfri pizza</span><span class="price">169,-</span></div>
-      <div class="item"><span class="name">Glutenfri toast</span><span class="price">59,-</span></div>
-    </main>
-    <footer class="footer">RUSH · MENY</footer>
-  </section>
+<div class="page" style="--count:11">
+  <div class="logo" aria-hidden="true"></div>
+  <h1 class="heading">Mat</h1>
+  <main class="items">
+    <div class="item"><span class="name">Pizza skinke</span><span class="price">169,-</span></div>
+    <div class="item"><span class="name">Pizza Margherita</span><span class="price">139,-</span></div>
+    <div class="item"><span class="name">Pizza pepperoni</span><span class="price">169,-</span></div>
+    <div class="item"><span class="name">Panini chorizo og ost</span><span class="price">89,-</span></div>
+    <div class="item"><span class="name">Steinovnsbakt panini med ost og salami</span><span class="price">89,-</span></div>
+    <div class="item"><span class="name">Toast</span><span class="price">59,-</span></div>
+    <div class="item"><span class="name">Gratinert ost og skinke sandwich</span><span class="price">79,-</span></div>
+    <div class="item"><span class="name">Pommes liten</span><span class="price">39,-</span></div>
+    <div class="item"><span class="name">Pommes stor</span><span class="price">59,-</span></div>
+    <div class="item"><span class="name">Glutenfri pizza</span><span class="price">169,-</span></div>
+    <div class="item"><span class="name">Glutenfri toast</span><span class="price">59,-</span></div>
+  </main>
+  <footer class="footer">RUSH HAUGESUND</footer>
 </div>
 <script>
-  const pages = [...document.querySelectorAll('.page')];
-  let current = 0;
-  setInterval(() => {
-    pages[current].classList.remove('active');
-    current = (current + 1) % pages.length;
-    pages[current].classList.add('active');
-  }, 5000);
+const pages=[...document.querySelectorAll('.page')];
+let active=0;
+setInterval(()=>{
+  pages[active].classList.remove('active');
+  active=(active+1)%pages.length;
+  pages[active].classList.add('active');
+},5000);
 </script>
 </body>
 </html>
